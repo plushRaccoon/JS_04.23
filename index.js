@@ -1,18 +1,16 @@
+// the first task
+
 checkPrompt();
 
-function createPrompt() {
-  return +prompt("Enter a number, please", "");
-}
-
 function checkPrompt() {
-  const PROMPT = createPrompt();
+  const PROMPT = +prompt('Enter a number, please', '');
 
   if (
     !Number.isInteger(PROMPT) ||
     PROMPT < 0 ||
     (Number.isNaN(PROMPT) && Number.isFinite(PROMPT))
   ) {
-    console.log("Incorrect input!");
+    console.log('Incorrect input!');
     checkPrompt();
   } else {
     console.log(`
@@ -59,5 +57,9 @@ function findDelimeters(num) {
     }
   }
 
-  return delimeters.join(", ");
+  return delimeters.join(', ');
 }
+
+// the second task
+
+
