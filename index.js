@@ -1,13 +1,13 @@
 // the first task
 
-checkPrompt1();
+checkNumber();
 
-function checkPrompt1() {
+function checkNumber() {
   const NUMBER = +prompt('Enter a number, please', '');
 
   if (!isInteger(NUMBER) || NUMBER < 0 || (isNaN(NUMBER) && isFinite(NUMBER))) {
     console.log('Incorrect input!');
-    checkPrompt1();
+    checkNumber();
   } else {
     console.log(`
       Number: ${NUMBER} \n
@@ -71,4 +71,43 @@ function findDelimeters(num) {
 
 // the second task
 
+checkSymbols();
 
+function checkSymbols() {
+  const SYMBOLS = prompt('Type from 1 to 3 symbols, please', '');
+  const CONDITION = /^\S{1,3}$/gi;
+
+  if (!SYMBOLS.match(CONDITION) || SYMBOLS === null) {
+    console.log('Incorrect input!');
+    checkSymbols();
+  } else {
+    checkMatrixSize(SYMBOLS);
+  }
+}
+
+function checkMatrixSize(symbols) {
+  const SIZE = +prompt('Enter a number, please', '');
+
+  if (
+    !isInteger(SIZE) ||
+    SIZE < 0 ||
+    SIZE > 10 ||
+    (isNaN(SIZE) && isFinite(SIZE))
+  ) {
+    console.log('Incorrect input!');
+    checkMatrixSize(symbols);
+  } else {
+    console.log(`${showMatrix(symbols, SIZE)}`);
+  }
+}
+
+function showMatrix(symbols, size) {
+  const MATRIX = Array(size).fill(Array(size).fill(symbols), 0, size);
+  let result = '';
+
+  for (let i = 0; i < MATRIX.length; i++) {
+    result += ` ${MATRIX[i].join(' ')} \n`;
+  }
+
+  return result;
+}
