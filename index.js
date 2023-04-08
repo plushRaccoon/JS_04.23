@@ -11,7 +11,7 @@ function makeDeepCopy(data) {
       if (object[key] instanceof Map) {
         clone[key] = new Map([...object[key]]);
         object[key].forEach((val, k) => {
-          if (typeof val === 'object') {
+          if (val instanceof Map || typeof val === 'object') {
             clone[key].set(k, makeClone(val));
           }
         });
@@ -29,4 +29,41 @@ function makeDeepCopy(data) {
 
     return clone;
   }
+}
+
+function selectFromInterval(arr, start, end) {
+  if (
+    arguments.length < 3 ||
+    !Array.isArray(arr) ||
+    arr.length === 0 ||
+    typeof start !== 'number' ||
+    (isNaN(start) && !isFinite(start)) ||
+    typeof end !== 'number' ||
+    (isNaN(end) && !isFinite(end))
+  ) {
+    throw new Error();
+  } else {
+    let nonValid = arr.some(
+      (i) => typeof i !== 'number' || isNaN(i) || !isFinite(i)
+    );
+    if (nonValid) {
+      throw new Error();
+    } else {
+      return arr.filter((num) => {
+        if (start > end) {
+          return num >= end && num <= start;
+        } else {
+          return num >= start && num <= end;
+        }
+      });
+    }
+  }
+}
+
+function isNaN(num) {
+  return Number.isNaN(num);
+}
+
+function isFinite(num) {
+  return Number.isFinite(num);
 }
