@@ -11,7 +11,7 @@ function makeDeepCopy(data) {
       if (object[key] instanceof Map) {
         clone[key] = new Map([...object[key]]);
         object[key].forEach((val, k) => {
-          if (val instanceof Map || typeof val === 'object') {
+          if (typeof val === 'object') {
             clone[key].set(k, makeClone(val));
           }
         });
@@ -66,4 +66,35 @@ function isNaN(num) {
 
 function isFinite(num) {
   return Number.isFinite(num);
+}
+
+function createIterable(from, to) {
+  if (
+    !from ||
+    !to ||
+    typeof from !== 'number' ||
+    typeof to !== 'number' ||
+    to <= from
+  ) {
+    throw new Error();
+  } else {
+    return {
+      from,
+      to,
+      [Symbol.iterator]() {
+        return {
+          current: this.from,
+          last: this.to,
+
+          next() {
+            if (this.current <= this.last) {
+              return { done: false, value: this.current++ };
+            } else {
+              return { done: true };
+            }
+          },
+        };
+      },
+    };
+  }
 }
