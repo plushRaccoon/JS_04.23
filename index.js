@@ -7,3 +7,12 @@ Array.prototype.customFilter = function (cb, obj) {
   });
   return result;
 };
+
+function createDebounceFunction(cb, timeout) {
+  let timer;
+  return (...args) => {
+    console.log(args);
+    clearTimeout(timer);
+    timer = setTimeout(() => cb.apply(this, args), timeout);
+  };
+}
