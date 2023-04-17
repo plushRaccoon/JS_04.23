@@ -84,3 +84,48 @@ function isNaN(num) {
 function isFinite(num) {
   return Number.isFinite(num);
 }
+
+class RickAndMorty {
+  constructor() {
+    this.URL = 'https://rickandmortyapi.com/api/';
+    this.getCharacter = this.getCharacter.bind(this);
+    this.getEpisode = this.getEpisode.bind(this);
+  }
+
+  getCharacter(characterId) {
+    if (
+      (characterId < 0 && !characterId) ||
+      typeof characterId !== 'number' ||
+      (isNaN(characterId) && !isFinite(characterId))
+    ) {
+      throw new Error();
+    } else {
+      return fetch(`${this.URL}character/${characterId}`)
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            return null;
+          }
+        })
+        .catch((error) => error);
+    }
+  }
+
+  async getEpisode(episodeId) {
+    if (
+      (episodeId < 0 && !episodeId) ||
+      typeof episodeId !== 'number' ||
+      (isNaN(episodeId) && !isFinite(episodeId))
+    ) {
+      throw new Error();
+    } else {
+      const RESPONSE = await fetch(`${this.URL}episode/${episodeId}`);
+      if (RESPONSE.ok) {
+        return await RESPONSE.json();
+      } else {
+        return null;
+      }
+    }
+  }
+}
