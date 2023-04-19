@@ -1,14 +1,3 @@
-// Создать класс Stack.
-// Создать класс с названием Stack в котором будет реализована работа одноименной структуры данных. В качестве единственного необязательного параметра конструктор Stack должен принимать число, которое будет максимальным количество элементов в стеке. Если параметр является не валидным, отрицательным, 0 или дробным числом, выкидывать ошибку (Invalid limit value). Если параметр не указан, задавать максимальный размер стека равным 10.
-// Реализовать публичные методы:
-// push(elem) - добавляет новый элемент в стек (выкидывает ошибку, если стек переполнен (Limit exceeded))
-// pop() - удаляет верхний элемент стека и возвращает его (сам элемент, а не вашу структуру, которую вы прописали для работы со стеком) (выкидывает ошибку, если стек пуст (Empty stack))
-// peek() - возвращает верхний элемент стека (сам элемент, а не вашу структуру, которую вы прописали для работы со стеком)  (null, если стек пуст)
-// isEmpty() - возвращает булево значение (пуст стек или нет)
-// toArray() - возвращает новый массив, состоящий из элементов стека (сами элементы, а не вашу структуру, которую вы прописали для работы со стеком)  (пустой массив если стек пуст) (можно использовать цикл для итерации по элементам стэка и методы массива только, чтобы записать эти элементы в новый массив)
-// Реализовать статические публичные методы:
-// fromIterable(iterable) - возвращает новый Stack, элементами которого служат элементы переданной итерируемой сущности. Максимальное количество элементов такого стека должно быть равно длине этой сущности. Если сущность не является итерируемой выкидывает ошибку (Not iterable). (можно использовать цикл для итерации по элементам итерируемой сущности, из элементов которого нужно собрать Stack)
-
 class Stack {
   constructor(stackSize = 10) {
     if (
@@ -19,27 +8,67 @@ class Stack {
       Number.isNaN(stackSize)
     ) {
       throw new Error('Invalid limit value');
+    } else {
+      this.stackSize = stackSize;
+      this.stack = new Array(stackSize);
+      this.push = this.push.bind(this);
+      this.pop = this.pop.bind(this);
+      this.peek = this.peek.bind(this);
+      this.isEmpty = this.isEmpty.bind(this);
+      this.toArray = this.toArray.bind(this);
+      this.topElementIdx = 0;
     }
-    this.stackSize = stackSize;
-    this.stack = new Array(stackSize);
-    this.push = this.push.bind(this);
-    this.position = 0;
   }
 
   push(elem) {
-    if (this.position == this.stackSize) {
+    if (this.topElementIdx === this.stackSize) {
       throw new Error('Limit exceeded');
     } else {
-      this.stack[this.position] = elem;
-      this.position++;
+      this.stack[this.topElementIdx] = elem;
+      this.topElementIdx++;
+    }
+  }
+
+  pop() {
+    if (this.topElementIdx === 0) {
+      throw new Error('Empty stack');
+    } else {
+      let current = this.stack[this.topElementIdx - 1];
+      this.stack[this.topElementIdx - 1] = undefined;
+      this.topElementIdx--;
+      return current;
+    }
+  }
+
+  peek() {
+    if (this.topElementIdx === 0) {
+      return null;
+    } else {
+      return this.stack[this.topElementIdx - 1];
+    }
+  }
+
+  isEmpty() {
+    return this.topElementIdx === 0;
+  }
+
+  toArray() {
+    return [...this.stack].filter((i) => i || i == 0);
+  }
+
+  static fromIterable(iterable) {
+    if (!iterable || typeof iterable[Symbol.iterator] !== 'function') {
+      throw new Error('Not iterable');
+    } else {
+      let newStackSize = 0;
+      for (let item of iterable) {
+        newStackSize++;
+      }
+      let newStack = new Stack(newStackSize);
+      for (let item of iterable) {
+        newStack.push(item);
+      }
+      return newStack;
     }
   }
 }
-
-const stack = new Stack();
-console.log(stack.push(3));
-console.log(stack.push(6));
-console.log(stack.push(0));
-console.log(stack.push('dfgdsfg'));
-console.log(stack.push('df34234'));
-console.log(stack);
