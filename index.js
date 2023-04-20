@@ -285,7 +285,7 @@ class Car {
   set fuelConsumption(value) {
     if (
       typeof value !== 'number' ||
-      value < 1 || // what if the car isn't moving??? maybe validate value < 0??
+      value < 1 ||
       !isInteger(value) ||
       isNaN(value) ||
       !isFinite(value)
@@ -340,7 +340,7 @@ class Car {
 
   shutDownEngine() {
     if (!this.#isStarted) {
-      throw new Error('Car hasn\'t started yet');
+      throw new Error("Car hasn't started yet");
     } else {
       this.#isStarted = false;
     }
@@ -355,7 +355,7 @@ class Car {
       !isFinite(fuelLiter)
     ) {
       throw new Error('Invalid fuel amount');
-    } else if ((this.#currentFuelVolume + fuelLiter) > 100) {
+    } else if (this.#currentFuelVolume + fuelLiter > this.#maxFuelVolume) {
       throw new Error('Too much fuel');
     } else if (this.#isStarted) {
       throw new Error('You have to shut down your car first');
@@ -366,8 +366,8 @@ class Car {
 
   drive(speed, hours) {
     let wayLength = speed * hours;
-    let fuelNeeds = wayLength * this.#fuelConsumption / 100;
-    let healthNeeds = wayLength * this.#damage / 100
+    let fuelNeeds = Math.floor((wayLength * this.#fuelConsumption) / 100);
+    let healthNeeds = Math.floor((wayLength * this.#damage) / 100);
     if (
       typeof speed !== 'number' ||
       speed <= 0 ||
@@ -385,11 +385,11 @@ class Car {
     ) {
       throw new Error('Invalid duration');
     } else if (speed > this.#maxSpeed) {
-      throw new Error('Car can\'t go this fast');
+      throw new Error("Car can't go this fast");
     } else if (!this.#isStarted) {
       throw new Error('You have to start your car first');
     } else if (fuelNeeds > this.#currentFuelVolume) {
-      throw new Error('You don\'t have enough fuel');
+      throw new Error("You don't have enough fuel");
     } else if (healthNeeds > this.#health) {
       throw new Error('Your car won’t make it');
     } else {
@@ -400,19 +400,20 @@ class Car {
   }
 
   repair() {
-
+    if (this.#isStarted) {
+      throw new Error('You have to shut down your car first');
+    } else if (this.#currentFuelVolume < this.#maxFuelVolume) {
+      throw new Error('You have to fill up your gas tank first');
+    } else {
+      this.#health = 100;
+    }
   }
 
+  getFullAmount() {
+    if (this.#currentFuelVolume === this.#maxFuelVolume) {
+      return 0;
+    } else {
+      return this.#maxFuelVolume - this.#currentFuelVolume;
+    }
+  }
 }
-
-const car = new Car();
-car.brand = 'toyota';
-car.model = '            prius';
-// car.yearOfManufacturing = ;
-car.start()
-car.shutDownEngine();
-car.fillUpGasTank(45);
-car.start()
-car.maxSpeed = 123;
-car.drive(123, 9);
-console.log(car);
