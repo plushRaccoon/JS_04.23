@@ -167,3 +167,252 @@ class LinkedList {
     }
   }
 }
+
+function isNaN(num) {
+  return Number.isNaN(num);
+}
+
+function isFinite(num) {
+  return Number.isFinite(num);
+}
+
+function isInteger(num) {
+  return Number.isInteger(num);
+}
+
+class Car {
+  #brand = '';
+  #model = '';
+  #yearOfManufacturing = 1950;
+  #maxSpeed = 100;
+  #maxFuelVolume = 20;
+  #fuelConsumption = 1;
+  #damage = 1;
+  #currentFuelVolume = 0;
+  #isStarted = false;
+  #health = 100;
+  #mileage = 0;
+
+  constructor() {}
+
+  get brand() {
+    return this.#brand;
+  }
+  set brand(value) {
+    if (
+      typeof value !== 'string' ||
+      value.trim().length < 1 ||
+      value.trim().length > 50
+    ) {
+      throw new Error('Invalid brand name');
+    } else {
+      this.#brand = value.trim();
+    }
+  }
+
+  get model() {
+    return this.#model;
+  }
+  set model(value) {
+    if (
+      typeof value !== 'string' ||
+      value.trim().length < 1 ||
+      value.trim().length > 50
+    ) {
+      throw new Error('Invalid model name');
+    } else {
+      this.#model = value.trim();
+    }
+  }
+
+  get yearOfManufacturing() {
+    return this.#yearOfManufacturing;
+  }
+  set yearOfManufacturing(value) {
+    if (
+      typeof value !== 'number' ||
+      value < 1950 ||
+      value > new Date().getFullYear() ||
+      !isInteger(value) ||
+      isNaN(value) ||
+      !isFinite(value)
+    ) {
+      throw new Error('Invalid year of manufacturing');
+    } else {
+      this.#yearOfManufacturing = value;
+    }
+  }
+
+  get maxSpeed() {
+    return this.#maxSpeed;
+  }
+  set maxSpeed(value) {
+    if (
+      typeof value !== 'number' ||
+      value < 100 ||
+      value > 330 ||
+      !isInteger(value) ||
+      isNaN(value) ||
+      !isFinite(value)
+    ) {
+      throw new Error('Invalid max speed');
+    } else {
+      this.#maxSpeed = value;
+    }
+  }
+
+  get maxFuelVolume() {
+    return this.#maxFuelVolume;
+  }
+  set maxFuelVolume(value) {
+    if (
+      typeof value !== 'number' ||
+      value < 20 ||
+      value > 100 ||
+      !isInteger(value) ||
+      isNaN(value) ||
+      !isFinite(value)
+    ) {
+      throw new Error('Invalid max fuel volume');
+    } else {
+      this.#maxFuelVolume = value;
+    }
+  }
+
+  get fuelConsumption() {
+    return this.#fuelConsumption;
+  }
+  set fuelConsumption(value) {
+    if (
+      typeof value !== 'number' ||
+      value < 1 || // what if the car isn't moving??? maybe validate value < 0??
+      !isInteger(value) ||
+      isNaN(value) ||
+      !isFinite(value)
+    ) {
+      throw new Error('Invalid fuel consumption');
+    } else {
+      this.#fuelConsumption = value;
+    }
+  }
+
+  get damage() {
+    return this.#damage;
+  }
+  set damage(value) {
+    if (
+      typeof value !== 'number' ||
+      value < 1 ||
+      value > 5 ||
+      !isInteger(value) ||
+      isNaN(value) ||
+      !isFinite(value)
+    ) {
+      throw new Error('Invalid damage');
+    } else {
+      this.#damage = value;
+    }
+  }
+
+  get currentFuelVolume() {
+    return this.#currentFuelVolume;
+  }
+
+  get isStarted() {
+    return this.#isStarted;
+  }
+
+  get health() {
+    return this.#health;
+  }
+
+  get mileage() {
+    return this.#mileage;
+  }
+
+  start() {
+    if (this.#isStarted) {
+      throw new Error('Car has already started');
+    } else {
+      this.#isStarted = true;
+    }
+  }
+
+  shutDownEngine() {
+    if (!this.#isStarted) {
+      throw new Error('Car hasn\'t started yet');
+    } else {
+      this.#isStarted = false;
+    }
+  }
+
+  fillUpGasTank(fuelLiter) {
+    if (
+      typeof fuelLiter !== 'number' ||
+      fuelLiter <= 0 ||
+      !isInteger(fuelLiter) ||
+      isNaN(fuelLiter) ||
+      !isFinite(fuelLiter)
+    ) {
+      throw new Error('Invalid fuel amount');
+    } else if ((this.#currentFuelVolume + fuelLiter) > 100) {
+      throw new Error('Too much fuel');
+    } else if (this.#isStarted) {
+      throw new Error('You have to shut down your car first');
+    } else {
+      this.#currentFuelVolume += fuelLiter;
+    }
+  }
+
+  drive(speed, hours) {
+    let wayLength = speed * hours;
+    let fuelNeeds = wayLength * this.#fuelConsumption / 100;
+    let healthNeeds = wayLength * this.#damage / 100
+    if (
+      typeof speed !== 'number' ||
+      speed <= 0 ||
+      !isInteger(speed) ||
+      isNaN(speed) ||
+      !isFinite(speed)
+    ) {
+      throw new Error('Invalid speed');
+    } else if (
+      typeof hours !== 'number' ||
+      hours <= 0 ||
+      !isInteger(hours) ||
+      isNaN(hours) ||
+      !isFinite(hours)
+    ) {
+      throw new Error('Invalid duration');
+    } else if (speed > this.#maxSpeed) {
+      throw new Error('Car can\'t go this fast');
+    } else if (!this.#isStarted) {
+      throw new Error('You have to start your car first');
+    } else if (fuelNeeds > this.#currentFuelVolume) {
+      throw new Error('You don\'t have enough fuel');
+    } else if (healthNeeds > this.#health) {
+      throw new Error('Your car won’t make it');
+    } else {
+      this.#currentFuelVolume -= fuelNeeds;
+      this.#health -= healthNeeds;
+      this.#mileage += wayLength;
+    }
+  }
+
+  repair() {
+
+  }
+
+}
+
+const car = new Car();
+car.brand = 'toyota';
+car.model = '            prius';
+// car.yearOfManufacturing = ;
+car.start()
+car.shutDownEngine();
+car.fillUpGasTank(45);
+car.start()
+car.maxSpeed = 123;
+car.drive(123, 9);
+console.log(car);
