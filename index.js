@@ -135,6 +135,7 @@ function updateDisplay() {
 }
 
 function beautifyNumber(number) {
+  if (error) return number;
   const stringNumber = number.toString(),
     decimalDigits = stringNumber.split('.')[1];
 
@@ -176,7 +177,7 @@ function compute(cur, prev) {
       computation = prev - cur;
       break;
     case '÷':
-      if (cur === 0) {
+      if (cur === 0 || cur === -0) {
         error = true;
         return false;
       } else {
