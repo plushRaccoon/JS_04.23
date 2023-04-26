@@ -13,10 +13,10 @@
     <title>Calculator</title>
     <style>
       :root {
-        --text: #e04b5a;
-        --action-button: #e49756;
-        --main-and-number: #5b305a;
-        --additional: #9a4c68;
+        --text: #e2eff1;
+        --action-button: #65799b;
+        --main-and-number: #b6d5e1;
+        --additional: #555273;
       }
 
       html {
@@ -25,7 +25,7 @@
 
       body {
         margin: 0 auto;
-        max-width: 320px;
+        max-width: 270px;
         max-height: 550px;
       }
 
@@ -71,8 +71,15 @@
         width: 100%;
         height: 40px;
         text-align: end;
-        font-size: 2rem;
-        color: #000000;
+        color: var(--text);
+      }
+
+      .input {
+        font-size: 1.5rem;
+      }
+
+      .result {
+        font-size: 2.5rem;
       }
 
       .keyboard {
@@ -106,21 +113,23 @@
 
       .key.side {
         background-color: var(--action-button);
-        color: var(--additional);
+        color: var(--text);
       }
 
       .key.side:hover {
         background-color: var(--text);
+        color: var(--action-button);
       }
 
       .key.top {
         background-color: var(--additional);
-        color: var(--action-button);
+        color: var(--text);
         border-color: var(--additional);
       }
 
       .key.top:hover {
         background-color: var(--text);
+        color: var(--additional);
       }
     </style>
   </head>
@@ -128,32 +137,33 @@
     <main class="main">
       <div class="calculator">
         <div class="screen">
-          <div class="input">sdg</div>
-          <div class="result">drgag</div>
+          <div class="input"></div>
+          <div class="result"></div>
         </div>
         <div class="keyboard">
           <button class="key top" data-key="clear">C</button>
           <button class="key top" data-key="plusmin">+/-</button>
-          <button class="key top" data-key="delete">del</button>
-          <button class="key side" data-key="devide">÷</button>
-          <button class="key" data-key="7">7</button>
-          <button class="key" data-key="8">8</button>
-          <button class="key" data-key="9">9</button>
-          <button class="key side" data-key="multiply">×</button>
-          <button class="key" data-key="4">4</button>
-          <button class="key" data-key="5">5</button>
-          <button class="key" data-key="6">6</button>
-          <button class="key side" data-key="minus">-</button>
-          <button class="key" data-key="1">1</button>
-          <button class="key" data-key="2">2</button>
-          <button class="key" data-key="3">3</button>
-          <button class="key side" data-key="plus">+</button>
-          <button class="key" data-key="0">0</button>
-          <button class="key" data-key="00">00</button>
-          <button class="key" data-key="dot">.</button>
+          <button class="key top" data-key="del">del</button>
+          <button class="key side" data-key="action">÷</button>
+          <button class="key" data-key="number">7</button>
+          <button class="key" data-key="number">8</button>
+          <button class="key" data-key="number">9</button>
+          <button class="key side" data-key="action">×</button>
+          <button class="key" data-key="number">4</button>
+          <button class="key" data-key="number">5</button>
+          <button class="key" data-key="number">6</button>
+          <button class="key side" data-key="action">-</button>
+          <button class="key" data-key="number">1</button>
+          <button class="key" data-key="number">2</button>
+          <button class="key" data-key="number">3</button>
+          <button class="key side" data-key="action">+</button>
+          <button class="key" data-key="number">0</button>
+          <button class="key" data-key="number">00</button>
+          <button class="key" data-key="number">.</button>
           <button class="key side" data-key="equal">=</button>
         </div>
       </div>
     </main>
+    <script src="index.js"></script>
   </body>
 </html>
