@@ -59,13 +59,15 @@ function appendNumber(number) {
 }
 
 function chooseAction(operation) {
-  if (current === '') return;
-  if (previous !== '') {
+  if (current === '' && action !== '' && previous !== '') {
+    action = operation;
+  } else if (previous !== '') {
     calculate();
+  } else {
+    action = operation;
+    previous = current;
+    current = '';
   }
-  action = operation;
-  previous = current;
-  current = '';
 }
 
 function clear() {
@@ -146,11 +148,6 @@ function beautifyNumber(number) {
     +number <= Number.MIN_SAFE_INTEGER
   ) {
     return (+number).toExponential(8);
-  } else if (
-    +number <= Number.MAX_SAFE_INTEGER ||
-    +number >= Number.MIN_SAFE_INTEGER
-  ) {
-    return stringNumber.replace(/\d{1,3}(?=(\d{3})+(?!\d))/gi, '$& ');
   } else {
     integerDigits = parseFloat(stringNumber.split('.')[0]);
   }
