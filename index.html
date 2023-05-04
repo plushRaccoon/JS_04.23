@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&family=Gruppo&display=swap"
+      rel="stylesheet"
+    />
+    <title>Calculator</title>
+    <style>
+      :root {
+        --text: #e2eff1;
+        --action-button: #65799b;
+        --main-and-number: #b6d5e1;
+        --additional: #555273;
+      }
+
+      html {
+        font-family: 'Gruppo', cursive;
+      }
+
+      body {
+        margin: 0 auto;
+        max-width: 270px;
+        max-height: 550px;
+      }
+
+      .main {
+        width: 100%;
+        height: 100%;
+        margin-top: 4em;
+      }
+
+      .calculator,
+      .screen {
+        border-radius: 20px;
+      }
+
+      .calculator {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        border: 1px solid var(--main-and-number);
+        background-color: var(--main-and-number);
+        padding: 10px;
+      }
+
+      .screen {
+        width: 90%;
+        min-height: 100px;
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid var(--action-button);
+        background-color: var(--action-button);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        justify-content: center;
+        align-items: end;
+      }
+
+      .input,
+      .result {
+        width: 100%;
+        height: 40px;
+        text-align: end;
+        color: var(--text);
+      }
+
+      .input {
+        font-size: 1.5rem;
+      }
+
+      .result {
+        font-size: 2.5rem;
+      }
+
+      .keyboard {
+        width: 94%;
+        height: 70%;
+        padding: 10px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(5, 1fr);
+        gap: 5px;
+        justify-items: center;
+      }
+
+      .key {
+        width: 100%;
+        height: 60px;
+        font-size: 1.5rem;
+        font-family: 'Bruno Ace SC', cursive;
+        border: 1px solid var(--action-button);
+        background-color: var(--main-and-number);
+        border-radius: 20px;
+        color: var(--action-button);
+        padding: 0;
+        transition: all 0.5s;
+      }
+
+      .key:hover {
+        background-color: var(--text);
+        border: var(--text);
+      }
+
+      .key.side {
+        background-color: var(--action-button);
+        color: var(--text);
+      }
+
+      .key.side:hover {
+        background-color: var(--text);
+        color: var(--action-button);
+      }
+
+      .key.top {
+        background-color: var(--additional);
+        color: var(--text);
+        border-color: var(--additional);
+      }
+
+      .key.top:hover {
+        background-color: var(--text);
+        color: var(--additional);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="main">
+      <div class="calculator">
+        <div class="screen">
+          <div class="input"></div>
+          <div class="result"></div>
+        </div>
+        <div class="keyboard">
+          <button class="key top" data-key="clear">C</button>
+          <button class="key top" data-key="plusmin">+/-</button>
+          <button class="key top" data-key="del">del</button>
+          <button class="key side" data-key="action">÷</button>
+          <button class="key" data-key="number">7</button>
+          <button class="key" data-key="number">8</button>
+          <button class="key" data-key="number">9</button>
+          <button class="key side" data-key="action">×</button>
+          <button class="key" data-key="number">4</button>
+          <button class="key" data-key="number">5</button>
+          <button class="key" data-key="number">6</button>
+          <button class="key side" data-key="action">-</button>
+          <button class="key" data-key="number">1</button>
+          <button class="key" data-key="number">2</button>
+          <button class="key" data-key="number">3</button>
+          <button class="key side" data-key="action">+</button>
+          <button class="key" data-key="number">0</button>
+          <button class="key" data-key="number">00</button>
+          <button class="key" data-key="number">.</button>
+          <button class="key side" data-key="equal">=</button>
+        </div>
+      </div>
+    </main>
+    <script src="index.js"></script>
+  </body>
+</html>
